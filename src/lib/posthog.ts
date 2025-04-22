@@ -10,8 +10,9 @@ export const posthogClient = {
     if (typeof window !== "undefined") {
       posthog.init(POSTHOG_API_KEY, {
         api_host: POSTHOG_HOST,
-        autocapture: false,
-        debug: false,
+        autocapture: true,
+        debug: true,
+        disable_session_recording: false,
         loaded: (posthog) => {
           // Disable debug mode
           if (process.env.NODE_ENV === "development") {

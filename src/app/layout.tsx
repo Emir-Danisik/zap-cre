@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Crexi Search - 10x Faster CRE Searching",
+  title: "ZAP CRE",
   description: "Search commercial real estate listings 10x faster with AI-powered natural language search",
 };
 
