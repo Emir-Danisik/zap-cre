@@ -1,0 +1,10 @@
+{
+  "buildCommand": "next build",
+  "cleanUrls": true,
+  "functions": {
+    "src/app/api/**/*": {
+      "memory": 3008,
+      "maxDuration": 800
+    }
+  }
+} 
