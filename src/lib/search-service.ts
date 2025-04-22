@@ -6,7 +6,7 @@
 import { mockCrexiResponse } from './mock-data';
 
 // Set to true to use mock data instead of making API calls
-const USE_MOCK_DATA = true;
+const USE_MOCK_DATA = false;
 
 /**
  * Generate a Crexi URL from a search query
