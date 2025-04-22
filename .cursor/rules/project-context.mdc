@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Context
+This application is designed for commercial real estate (CRE) brokerages. Its primary goal is to enable users to search the Crexi platform up to 10x faster than traditional methods. The app should focus on speed, efficiency, and a user-friendly experience tailored to the needs of CRE professionals.
+
+## Key Points
+- Target users: CRE brokerages and professionals
+- Main feature: Rapid, efficient search of Crexi listings
+- Emphasis on performance and usability
+- Should integrate seamlessly with CRE workflows

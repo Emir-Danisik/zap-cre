@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Guidelines
+- Use consistent code formatting and linting.
+- Prefer functional components and hooks in React.
+- Keep components small and focused.
+- Use TypeScript for type safety.
+- Store reusable logic in the src/lib directory.
+- Exclude build, cache, and node_modules directories from AI context.
+- Follow best practices for Next.js 15 and React 19.

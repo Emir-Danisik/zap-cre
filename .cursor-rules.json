@@ -1,0 +1,14 @@
+{
+  "formatOnSave": true,
+  "lintOnSave": true,
+  "exclude": [
+    "node_modules/",
+    ".next/",
+    "dist/",
+    "build/",
+    "*.log"
+  ],
+  "tabSize": 2,
+  "useTabs": false,
+  "endOfLine": "lf"
+} 
