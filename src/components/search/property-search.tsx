@@ -9,6 +9,7 @@ import { generateUrl, fetchCrexiResults, isCrexiUrl, transformCrexiResults, rank
 import { recordSearch } from "@/lib/search-db";
 import { useAuth } from "@clerk/nextjs";
 import { ChevronDown, Search, Send } from "lucide-react";
+import { toast } from "sonner";
 
 // Define the property type that will be used throughout the search components
 export interface Property {
@@ -26,30 +27,6 @@ export interface Property {
   isGoodFit?: boolean;
   fitScore?: number;
 }
-
-// Sample chat responses for demo - as a fallback when API calls fail
-const mockChatResponses = [
-  {
-    query: "which listing has the best price",
-    response: "Property #1671699 appears to offer the best value at $32/sqft for a Class A office space.",
-    reordering: [1671699, 1815466, 1716086] // IDs to prioritize
-  },
-  {
-    query: "which property is leed certified",
-    response: "Properties #1815466 and #1701822 are both LEED certified, with #1815466 being LEED Gold.",
-    reordering: [1815466, 1701822]
-  },
-  {
-    query: "show me properties with open floor plan",
-    response: "Properties #1815466 and #1689616 feature open floor plans as mentioned in their descriptions.",
-    reordering: [1815466, 1689616]
-  },
-  {
-    query: "which has the most square footage",
-    response: "Property #1671699 has the largest space with 35,000 sqft available.",
-    reordering: [1671699]
-  }
-];
 
 const PropertySearch = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,24 +51,49 @@ const PropertySearch = () => {
     setTotalApiCount(0);
     setChatResponse(null);
     
+    const toastId = toast.loading(
+      'Searching for properties...',
+      {
+        position: 'top-right',
+        duration: 6000,
+        icon: '🔍',
+        style: {
+          backgroundColor: '#10b981', // Green background
+          color: 'white',
+          fontWeight: '500',
+          borderRadius: '8px',
+          padding: '16px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+        },
+        description: 'This search may take 2-3 minutes to complete'
+      }
+    );
+    
     try {
       // Check if the query is already a Crexi URL
       let crexiUrl: string;
       
       if (isCrexiUrl(query)) {
         crexiUrl = query;
+        toast.loading('Processing Crexi URL...', { id: toastId });
       } else {
+        toast.loading('Generating search URL...', { id: toastId });
         crexiUrl = await generateUrl(query);
+        toast.success('URL generated successfully!', { id: toastId });
       }
       
       // Fetch the results from the Crexi API using the URL
+      toast.loading('Fetching property listings...', { id: toastId });
       const crexiData = await fetchCrexiResults(crexiUrl);
       
       if (!crexiData.success) {
         throw new Error(crexiData.error || 'Failed to fetch Crexi data');
       }
       
+      toast.success(`Found ${crexiData.data.length} properties!`, { id: toastId });
+      
       // Transform the results
+      toast.loading('Processing property data...', { id: toastId });
       const transformedResults = transformCrexiResults(crexiData.data);
       
       // Get total count
@@ -99,21 +101,30 @@ const PropertySearch = () => {
       setTotalApiCount(totalCount);
 
       // Rank the properties
+      toast.loading('Ranking properties by relevance...', { id: toastId });
       const rankedResults = await rankPropertiesByFit(query, crexiData, transformedResults);
+      toast.success('Properties ranked successfully!', { id: toastId });
 
       // Record search
-      recordSearch({
+      toast.loading('Saving your search...', { id: toastId });
+      await recordSearch({
         user_id: userId || undefined,
         query,
         api_response: crexiData
-      }).catch(err => console.error("Failed to record search:", err));
+      }).catch(err => {
+        console.error("Failed to record search:", err);
+        // Don't fail the whole process if this fails
+      });
       
       // Update state
       setResults(rankedResults);
       setDisplayedResults(rankedResults);
+      
+      toast.success('Search completed successfully!', { id: toastId });
     } catch (err: any) {
       console.error('Search error:', err);
       setError(err.message || "An error occurred while searching. Please try again.");
+      toast.error(`Search failed: ${err.message || "Unknown error"}`, { id: toastId });
     } finally {
       setIsLoading(false);
     }
@@ -182,34 +193,7 @@ const PropertySearch = () => {
       }
     } catch (error) {
       console.error('Error analyzing properties for question:', error);
-      
-      // Fall back to mock data if the API call fails
-      const normalizedInput = chatInput.toLowerCase().trim();
-      
-      // Find a matching response or use default
-      const matchedResponse = mockChatResponses.find(item => 
-        normalizedInput.includes(item.query) || item.query.includes(normalizedInput)
-      );
-      
-      if (matchedResponse) {
-        setChatResponse(matchedResponse.response);
-        
-        if (matchedResponse.reordering && matchedResponse.reordering.length > 0) {
-          const reorderedResults = [...results];
-          
-          matchedResponse.reordering.forEach(id => {
-            const index = reorderedResults.findIndex(p => p.id.toString() === id.toString());
-            if (index > 0) {
-              const [item] = reorderedResults.splice(index, 1);
-              reorderedResults.unshift(item);
-            }
-          });
-          
-          setDisplayedResults(reorderedResults);
-        }
-      } else {
-        setChatResponse("I'm sorry, I couldn't analyze these properties for your question at the moment.");
-      }
+      setChatResponse("I'm sorry, I couldn't analyze these properties for your question at the moment. Please try again later.");
     }
     
     // Clear input
