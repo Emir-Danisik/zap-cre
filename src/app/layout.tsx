@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import Header from "@/components/layout/header";
+import PostHogProvider from "@/lib/PostHogProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +34,12 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased flex flex-col min-h-screen`}
         >
           <Suspense fallback={null}> 
+            <PostHogProvider>
             <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
+              <main className="flex-grow">
+                {children}
+              </main>
+            </PostHogProvider>
           </Suspense>
           <Toaster position="top-right" richColors />
         </body>

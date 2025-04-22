@@ -14,10 +14,10 @@ export default function Home() {
       <div className="container max-w-5xl mx-auto space-y-8 flex flex-col items-center justify-center flex-grow min-h-[calc(80vh-4rem)]">
         <header className="text-center space-y-2">
           <h1 className="text-5xl font-bold text-primary">
-            Property Search
+            AI Property Search
           </h1>
           <p className="text-xl text-muted-foreground">
-            Find perfect properties for your clients 10x faster with AI
+            Type in natural language to find properties 10X faster
           </p>
         </header>
         
