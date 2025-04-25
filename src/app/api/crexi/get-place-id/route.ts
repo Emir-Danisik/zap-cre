@@ -9,7 +9,7 @@ const PLACES_API_ENDPOINT = 'https://places.googleapis.com/v1/places:searchText'
 
 /**
  * GET endpoint to find Google Place ID using Text Search (New) API.
- * Example: /api/get-place-id?placeName=Austin%2C%20TX
+ * Example: /api/crexi/get-place-id?placeName=Austin%2C%20TX
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);

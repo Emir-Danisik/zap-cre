@@ -126,7 +126,7 @@ Output *only* the valid JSON object matching the schema. Do NOT include pageSize
        return NextResponse.json({ error: 'Could not determine location from query.' }, { status: 400 });
     }
 
-    const placeIdResponse = await fetch(`${baseUrl}/api/get-place-id?placeName=${encodeURIComponent(locationName)}`);
+    const placeIdResponse = await fetch(`${baseUrl}/api/crexi/get-place-id?placeName=${encodeURIComponent(locationName)}`);
     
     if (!placeIdResponse.ok) {
        const errorData = await placeIdResponse.json();
@@ -167,7 +167,7 @@ Output *only* the valid JSON object matching the schema. Do NOT include pageSize
 // GET endpoint instructions should be updated to reflect the new process
 export async function GET(): Promise<NextResponse> {
   return NextResponse.json({
-    message: "Generates Crexi URL. Extracts location from query, gets Place ID via /api/get-place-id, constructs URL.",
+    message: "Generates Crexi URL. Extracts location from query, gets Place ID via /api/crexi/get-place-id, constructs URL.",
     usage: { method: "POST", body: { query: "..." } },
     returns: { success: "boolean", url: "Constructed Crexi URL" }
   });

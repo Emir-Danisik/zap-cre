@@ -30,3 +30,7 @@ const PropertySearchForm = ({ onSearch }: PropertySearchFormProps) => {
 };
 
 export default PropertySearchForm; 
+
+//I want a Burger King like retail establishment, budget $2-4M, minimum cap rate of 5% in florida
+
+// ?marketingDocument=download

@@ -30,8 +30,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <MapPin size={14} className="mr-1" />
             <span className="line-clamp-1">{property.location}</span>
           </div>
-        </div>
-        
+          </div>
+          
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center text-foreground">
             <DollarSign size={16} className="mr-1 text-primary" />

@@ -43,7 +43,7 @@ const Header: React.FC = () => {
             {user && (user.firstName || user.fullName || user.username) && (
               <span className="text-sm font-medium hidden sm:inline">
                 {user.firstName || user.fullName || user.username}
-              </span>
+            </span>
             )}
             <UserButton afterSignOutUrl="/" />
           </div>
@@ -58,8 +58,8 @@ const Header: React.FC = () => {
             <Link href="/sign-up" className="px-3 py-1.5 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
               Sign Up
             </Link>
-          </div>
-        )}
+            </div>
+          )}
       </div>
     </motion.header>
   );

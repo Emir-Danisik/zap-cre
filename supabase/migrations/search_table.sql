@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS public.searches (
   user_id TEXT REFERENCES public.users(id) NULL, -- Can be NULL for unauthenticated searches
   query TEXT NOT NULL,
   api_response JSONB NOT NULL,
+  crexi_url TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

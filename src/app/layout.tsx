@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import Header from "@/components/layout/header";
-import PostHogProvider from "@/lib/PostHogProvider";
+import PostHogProvider from "@/posthog/PostHogProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

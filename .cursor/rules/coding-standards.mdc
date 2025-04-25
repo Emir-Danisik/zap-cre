@@ -1,0 +1,48 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Coding Standards
+
+## TypeScript
+- Use TypeScript for all new code
+- Define proper types for all functions, components, and variables
+- Avoid using `any` type where possible
+- Use interfaces for object shapes and type aliases for unions/intersections
+- Leverage Next.js app router typings for route handlers
+
+## React & Next.js
+- Use React Server Components where appropriate
+- Client components should be marked with `'use client'` directive
+- Prefer functional components with hooks over class components
+- Use React Context for state that needs to be shared across multiple components
+- Follow Next.js 15+ conventions for routing and data fetching
+- Utilize Next.js Image component for optimized images
+
+## Component Structure
+- One component per file
+- Name files according to the component they contain
+- Keep components small and focused on a single responsibility
+- Extract reusable logic into custom hooks
+- Place shared UI components in `src/components/ui`
+- Place layout components in `src/components/layout`
+- Place search-specific components in `src/components/search`
+
+## Styling
+- Use Tailwind CSS for styling
+- Follow a consistent color scheme defined in tailwind.config
+- Utilize shadcn/ui components where appropriate
+- Keep responsive design in mind for all components
+
+## API Routes
+- Validate inputs with proper error handling
+- Return consistent JSON response structures
+- Use appropriate HTTP status codes
+- Document request/response formats with TypeScript types
+- Implement proper error handling and logging
+
+## State Management
+- Use React hooks for local state
+- Consider server components for data that can be fetched on the server
+- Keep client-side state minimal and focused

@@ -6,9 +6,38 @@
     ".next/",
     "dist/",
     "build/",
-    "*.log"
+    "*.log",
+    "public/assets/",
+    ".vercel/",
+    ".clerk/.tmp/"
+  ],
+  "includedFiles": [
+    "src/**/*.{ts,tsx,js,jsx,mjs,json,md}",
+    "app/**/*.{ts,tsx,js,jsx,mjs,json,md}",
+    "pages/**/*.{ts,tsx,js,jsx,mjs,json,md}",
+    "components/**/*.{ts,tsx,js,jsx,mjs,json,md}",
+    "lib/**/*.{ts,tsx,js,jsx,mjs,json,md}",
+    "styles/**/*.{css,scss}",
+    "public/**/*.{svg,png,jpg,jpeg,gif}",
+    "*.{ts,js,json,md}"
   ],
   "tabSize": 2,
   "useTabs": false,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "insertFinalNewline": true,
+  "trailingComma": "es5",
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 80,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "rules": [
+    ".cursor/rules/project-context.mdc",
+    ".cursor/rules/project-standards.mdc",
+    ".cursor/rules/folder-structure.mdc",
+    ".cursor/rules/coding-standards.mdc",
+    ".cursor/rules/integrations.mdc",
+    ".cursor/rules/performance.mdc",
+    ".cursor/rules/development-workflow.mdc"
+  ]
 } 

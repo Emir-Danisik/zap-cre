@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# External Integrations
+
+## Clerk
+- Used for authentication and user management
+- Handle sign-in and sign-up flows
+- Implement proper webhook handlers for authentication events
+- Follow Clerk's best practices for Next.js 15+ integration
+
+## Apify
+- Used for scraping Crexi commercial real estate listings
+- Implement proper error handling for Apify client requests
+- Cache responses where appropriate to improve performance
+- Respect rate limits and implement retry logic
+- Monitor scraping jobs and handle failures gracefully
+
+## Supabase
+- Database for storing user data and search history
+- Follow migration conventions for database schema changes
+- Use prepared statements to prevent SQL injection
+- Implement proper error handling for database operations
+
+## Other Services
+- Ensure environment variables are properly configured for all third-party services
+- Document required environment variables in .env.example
+- Keep API keys and secrets secure
+- Handle service outages gracefully with appropriate fallbacks

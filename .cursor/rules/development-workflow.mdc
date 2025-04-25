@@ -1,0 +1,45 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Development Workflow
+
+## Git Workflow
+- Use feature branches for new features and bug fixes
+- Create descriptive branch names (feature/, bugfix/, etc.)
+- Keep commits small and focused
+- Write meaningful commit messages
+- Submit pull requests for code review before merging
+
+## Code Review
+- Review all code changes before merging
+- Check for adherence to project standards
+- Verify functionality works as expected
+- Look for potential performance issues
+- Ensure proper test coverage
+
+## Testing
+- Write tests for critical functionality
+- Aim for high test coverage on core business logic
+- Use Jest for unit testing
+- Use React Testing Library for component tests
+- Implement end-to-end tests for critical user flows
+
+## Environment Configuration
+- Use .env.local for local development
+- Never commit environment secrets to version control
+- Document required environment variables
+- Set up different environments (development, staging, production)
+
+## Deployment
+- Use Vercel for deployments
+- Set up preview deployments for pull requests
+- Implement automatic deployments for the main branch
+- Monitor deployments for errors and performance issues
+
+## Documentation
+- Document complex business logic
+- Keep README up to date with setup instructions
+- Document API endpoints and their usage
+- Use TypeScript JSDoc comments for function documentation

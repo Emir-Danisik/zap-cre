@@ -11,7 +11,7 @@ export const posthogClient = {
       posthog.init(POSTHOG_API_KEY, {
         api_host: POSTHOG_HOST,
         autocapture: true,
-        debug: true,
+        debug: false,
         disable_session_recording: false,
         loaded: (posthog) => {
           // Disable debug mode

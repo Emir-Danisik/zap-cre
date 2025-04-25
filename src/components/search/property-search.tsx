@@ -10,6 +10,7 @@ import { recordSearch } from "@/lib/search-db";
 import { useAuth } from "@clerk/nextjs";
 import { ChevronDown, Search, Send } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 // Define the property type that will be used throughout the search components
 export interface Property {
@@ -35,6 +36,7 @@ const PropertySearch = () => {
   const [displayedResults, setDisplayedResults] = useState<Property[]>([]);
   const [totalApiCount, setTotalApiCount] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+  const [crexiUrl, setCrexiUrl] = useState<string | null>(null);
   const { userId } = useAuth();
   
   // Chat state
@@ -50,6 +52,7 @@ const PropertySearch = () => {
     setDisplayedResults([]);
     setTotalApiCount(0);
     setChatResponse(null);
+    setCrexiUrl(null);
     
     const toastId = toast.loading(
       'Searching for properties...',
@@ -82,6 +85,9 @@ const PropertySearch = () => {
         toast.success('URL generated successfully!', { id: toastId });
       }
       
+      // Store the Crexi URL in state
+      setCrexiUrl(crexiUrl);
+      
       // Fetch the results from the Crexi API using the URL
       toast.loading('Fetching property listings...', { id: toastId });
       const crexiData = await fetchCrexiResults(crexiUrl);
@@ -100,17 +106,26 @@ const PropertySearch = () => {
       const totalCount = crexiData.totalCount || (crexiData.data ? crexiData.data.length : 0);
       setTotalApiCount(totalCount);
 
-      // Rank the properties
-      toast.loading('Ranking properties by relevance...', { id: toastId });
-      const rankedResults = await rankPropertiesByFit(query, crexiData, transformedResults);
-      toast.success('Properties ranked successfully!', { id: toastId });
+      // Rank the properties only if not a direct Crexi URL
+      let rankedResults;
+      if (isCrexiUrl(query)) {
+        // Skip ranking for direct Crexi URLs
+        toast.success('Properties loaded successfully!', { id: toastId });
+        rankedResults = transformedResults;
+      } else {
+        // Perform ranking for natural language queries
+        toast.loading('Ranking properties by relevance...', { id: toastId });
+        rankedResults = await rankPropertiesByFit(query, crexiData, transformedResults);
+        toast.success('Properties ranked successfully!', { id: toastId });
+      }
 
       // Record search
       toast.loading('Saving your search...', { id: toastId });
       await recordSearch({
         user_id: userId || undefined,
         query,
-        api_response: crexiData
+        api_response: crexiData,
+        crexi_url: crexiUrl
       }).catch(err => {
         console.error("Failed to record search:", err);
         // Don't fail the whole process if this fails
@@ -123,8 +138,19 @@ const PropertySearch = () => {
       toast.success('Search completed successfully!', { id: toastId });
     } catch (err: any) {
       console.error('Search error:', err);
-      setError(err.message || "An error occurred while searching. Please try again.");
-      toast.error(`Search failed: ${err.message || "Unknown error"}`, { id: toastId });
+      
+      // Custom error message for missing location
+      const specificLocationError = 'Could not determine location from query.';
+      let errorMessage = err.message || "An error occurred while searching. Please try again.";
+      let toastMessage = `Search failed: ${errorMessage}`;
+      
+      if (err.message === specificLocationError) {
+        errorMessage = "Please provide a more specific location (e.g., 'Austin, TX') in your search query.";
+        toastMessage = `Search failed: ${errorMessage}`;
+      }
+      
+      setError(errorMessage);
+      toast.error(toastMessage, { id: toastId });
     } finally {
       setIsLoading(false);
     }
@@ -140,7 +166,7 @@ const PropertySearch = () => {
       setChatResponse("Analyzing properties...");
       
       // Call the enhanced property-fit API with the user's question
-      const response = await fetch('/api/property-fit', {
+      const response = await fetch('/api/crexi/property-fit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -226,6 +252,30 @@ const PropertySearch = () => {
       {/* Results with Chat at the top */}
       {!isLoading && !error && displayedResults.length > 0 && (
         <>
+          {/* Results header with Crexi URL button */}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">
+              AI shortlisted {displayedResults.length} Crexi results to {Math.min(10, displayedResults.length)} properties
+            </h2>
+            {crexiUrl && (
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="gap-1"
+              >
+                <a 
+                  href={crexiUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Search className="h-4 w-4" />
+                  See Crexi Search
+                </a>
+              </Button>
+            )}
+          </div>
+          
           {/* Chat interface - Moved to top of results */}
           <div className="w-full border border-border rounded-lg overflow-hidden mb-6 shadow-sm">
             <div className="bg-primary/5 border-b border-border px-4 py-3 flex items-center">

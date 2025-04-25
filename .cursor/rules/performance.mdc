@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Performance Guidelines
+
+## Core Web Vitals
+- Target Largest Contentful Paint (LCP) < 2.5s
+- Target First Input Delay (FID) < 100ms
+- Target Cumulative Layout Shift (CLS) < 0.1
+
+## Server Components
+- Utilize Next.js server components to reduce client-side JavaScript
+- Keep client components minimal and focused
+- Use streaming where appropriate for progressive rendering
+
+## Image Optimization
+- Always use Next.js Image component
+- Properly size images based on their display size
+- Use modern image formats (WebP, AVIF) where supported
+- Implement responsive images with appropriate srcsets
+
+## Bundle Size
+- Keep client-side bundle size minimal
+- Use dynamic imports for code splitting
+- Avoid large dependencies where possible
+- Monitor bundle size with regular checks
+
+## API Performance
+- Implement caching strategies for API responses
+- Use edge functions for geographically distributed APIs
+- Monitor API response times and optimize slow endpoints
+- Implement pagination for large datasets
+
+## Data Fetching
+- Use parallel data fetching where possible
+- Implement stale-while-revalidate patterns for fresh data
+- Consider using React Query or SWR for client-side data fetching
+- Implement proper loading states for data fetching operations

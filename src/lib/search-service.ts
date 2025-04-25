@@ -20,7 +20,7 @@ export async function generateUrl(query: string): Promise<string> {
     return `https://www.crexi.com/properties?mockQuery=${encodeURIComponent(query)}`;
   }
 
-  const response = await fetch('/api/generate-url', {
+  const response = await fetch('/api/crexi/generate-url', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ function numberWithCommas(x: number): string {
 export async function rankPropertiesByFit(query: string, apiResponse: any, properties: any[]): Promise<any[]> {
   try {
     // Call the property-fit API to get rankings
-    const response = await fetch('/api/property-fit', {
+    const response = await fetch('/api/crexi/property-fit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

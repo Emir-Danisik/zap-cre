@@ -3,14 +3,8 @@
  * Records search queries and results in the database
  */
 
+import { SearchRecord } from '@/types/crexi';
 import { supabase } from './supabase';
-
-interface SearchRecord {
-  id?: string;
-  user_id?: string;
-  query: string;
-  api_response: any;
-}
 
 /**
  * Record a search in the database
@@ -19,7 +13,7 @@ interface SearchRecord {
  */
 export async function recordSearch(searchData: SearchRecord) {
   try {
-    const response = await fetch('/api/record-search', {
+    const response = await fetch('/api/crexi/record-search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

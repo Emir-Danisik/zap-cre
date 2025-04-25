@@ -1,0 +1,37 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Folder Structure
+
+## Main Directories
+- **src/app**: Next.js app router pages and API routes
+- **src/components**: Reusable UI components
+  - **layout**: Layout components (headers, footers, etc.)
+  - **search**: Search-specific components
+  - **ui**: Generic UI components
+- **src/hooks**: Custom React hooks
+- **src/lib**: Utility functions and shared logic
+- **src/types**: TypeScript type definitions
+- **public**: Static assets
+- **supabase**: Database migrations and configuration
+
+## API Routes
+- **/api/crexi**: Endpoints for interacting with Crexi's services
+  - **/generate-url**: Generates URLs for Crexi searches
+  - **/get-place-id**: Retrieves place IDs for location queries
+  - **/property-fit**: Property matching and filtering
+  - **/record-search**: Records user search history
+- **/api/webhooks**: External service webhook handlers
+  - **/clerk**: Authentication webhook handlers
+
+## Authentication
+- **sign-in/[[...sign-in]]**: Sign-in pages (Clerk integration)
+- **sign-up/[[...sign-up]]**: Sign-up pages (Clerk integration)
+
+## Configuration Files
+- **next.config.ts**: Next.js configuration
+- **package.json**: NPM dependencies and scripts
+- **tsconfig.json**: TypeScript compiler options
+- **components.json**: UI component configurations
